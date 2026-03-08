@@ -5,6 +5,6 @@
   "author": {
     "name": "Taylor Schmidt"
   },
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "keywords": ["spec-driven", "development", "workflow", "planning", "features"]
 }
