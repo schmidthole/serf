@@ -190,6 +190,7 @@ Example: `specs/work/active/2026-03-08-implement-config-loader.md`
 ---
 feature: configuration
 status: ready
+assignee:
 start_date: 2026-03-08
 archive_date:
 keywords: "config,toml,loader,validation"

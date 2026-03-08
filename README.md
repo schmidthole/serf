@@ -21,7 +21,9 @@ claude --plugin-dir ./path/to/serf
 
 Serf uses a `specs/` directory structure to document features and track work. Features are the source of truth for what the project does. Work items are an append-only log of tasks undertaken to implement those features. Skills automate the creation, management, and validation of both.
 
-See [skills/development-workflow.md](skills/development-workflow.md) for the full conventions and [user-guide.md](user-guide.md) for a step-by-step walkthrough of the workflow for humans.
+See [skills/development-workflow.md](skills/development-workflow.md) for the full conventions, [user-guide.md](user-guide.md) for a step-by-step walkthrough of the workflow for humans
+
+While Serf does not aim to dictate development lifecycle for team, we do provide a suggested guide for how teams of humans and agents can user Serf together effectively at: [collaboration.md](collaboration.md).
 
 ### Typical workflow
 

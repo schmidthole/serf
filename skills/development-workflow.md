@@ -83,6 +83,7 @@ Each work item markdown file needs to contain some frontmatter in order to assoc
 ```yaml
 feature: feature-directory # exact name of the feature directory this targets
 status: ready | in-progress | blocked # current state of the work item
+assignee: # name or identifier of the person/agent working on this item
 start_date: YYYY-MM-DD # date matching the title date
 archive_date: YYYY-MM-DD # date the work item was completed/archived
 keywords: "comma,delimited,list,of,keywords" # comma delimited keywords for indexing/search
