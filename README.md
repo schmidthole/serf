@@ -23,7 +23,7 @@ Serf uses a `specs/` directory structure to document features and track work. Fe
 
 See [skills/development-workflow.md](skills/development-workflow.md) for the full conventions, [user-guide.md](user-guide.md) for a step-by-step walkthrough of the workflow for humans
 
-While Serf does not aim to dictate development lifecycle for team, we do provide a suggested guide for how teams of humans and agents can user Serf together effectively at: [collaboration.md](collaboration.md).
+While Serf does not aim to dictate development lifecycle for teams, we do provide a suggested guide for how teams of humans and agents can user Serf together effectively at: [collaboration.md](collaboration.md).
 
 ### Typical workflow
 
