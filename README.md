@@ -4,12 +4,17 @@ Serf is a spec-driven development plugin for Claude Code. It provides a set of c
 
 ## Installation
 
-```bash
-# install from local directory (development)
-claude --plugin-dir ./path/to/serf
+Add the marketplace and install the plugin:
 
-# install from marketplace
-claude plugin install serf@<marketplace-name>
+```
+/plugin marketplace add <github-user>/serf
+/plugin install serf@serf
+```
+
+For local development:
+
+```bash
+claude --plugin-dir ./path/to/serf
 ```
 
 ## How it works

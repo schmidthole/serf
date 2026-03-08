@@ -3,7 +3,7 @@
   "description": "Spec-driven development framework for Claude Code. Aligns users and agents with feature specs, work items, and automated planning.",
   "version": "0.1.0",
   "author": {
-    "name": "Taylor"
+    "name": "Taylor Schmidt"
   },
   "license": "MIT",
   "keywords": ["spec-driven", "development", "workflow", "planning", "features"]

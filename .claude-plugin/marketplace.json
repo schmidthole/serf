@@ -1,0 +1,13 @@
+{
+  "name": "serf",
+  "owner": {
+    "name": "Taylor Schmidt"
+  },
+  "plugins": [
+    {
+      "name": "serf",
+      "source": ".",
+      "description": "Spec-driven development framework for Claude Code"
+    }
+  ]
+}
