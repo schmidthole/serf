@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "serf",
-      "source": ".",
+      "source": "./",
       "description": "Spec-driven development framework for Claude Code"
     }
   ]
