@@ -17,7 +17,7 @@ follow these steps:
 
 1. **locate features.** read `specs/features/features.md` to get the list of features. if a specific feature was provided, filter to just that one.
 
-2. **for each feature with status `in-progress` or `implemented`:**
+2. **for each feature with status `in-progress` or `implemented`** (skip features with status `consolidated` or `retired`):
 
    a. read the `spec.md` and extract the `## Source Paths` section.
 

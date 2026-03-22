@@ -52,7 +52,9 @@ follow these steps:
    - check if `proposal.md` has `status` frontmatter — if missing, note it
    - check if it has a `spec.md` — if missing, note it
    - check if it has a `## Source Paths` section in `spec.md` — if missing, note it
-   - check if the feature is listed in `features.md` — if missing, note it
+   - check if it has an `amendments/` directory — not required, but note any amendment files found for context
+   - if `proposal.md` has `status: consolidated`, check that `consolidated_into` is present and references a valid feature
+   - check if the feature is listed in `features.md` — if missing, note it (consolidated/retired features should not be in the index)
 
 6. **audit existing work items.** glob for all files in `specs/work/active/` and `specs/work/archive/`. for each:
    - check if the filename matches the `YYYY-MM-DD-description.md` convention — if not, note it

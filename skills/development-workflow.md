@@ -31,14 +31,70 @@ Each feature directory can contain the following files. All of these files are n
 Each `proposal.md` should contain frontmatter with a `status` field indicating the feature's lifecycle stage:
 
 ```yaml
-status: proposed | in-progress | implemented
+status: proposed | in-progress | implemented | consolidated | retired
 ```
 
 * **proposed**: feature has been described but no implementation work has started.
 * **in-progress**: active work items exist targeting this feature.
 * **implemented**: feature is complete and reflected in code.
+* **consolidated**: feature has been merged into another feature (see `consolidated_into` field).
+* **retired**: feature is no longer part of the product.
 
 This allows agents and users to understand feature state without cross-referencing every work item.
+
+#### Amendments
+
+Features evolve over time. When an existing feature needs new functionality, changed behavior, or removed capabilities, this is an **amendment** to the existing feature, not a new feature. The distinction matters: features are nouns (what the system does), work items are verbs (what was done to build/change it). Adding hot-reload to configuration is an amendment to "configuration," not a separate "config-hot-reload" feature.
+
+Each feature directory can contain an `amendments/` sub-directory that records the history of changes to the feature over time:
+
+```
+specs/features/configuration/
+├── proposal.md
+├── spec.md
+└── amendments/
+    ├── 2026-03-22-add-hot-reload.md
+    └── 2026-04-10-remove-legacy-format.md
+```
+
+Amendment records follow this format:
+
+```yaml
+---
+date: YYYY-MM-DD
+type: addition | modification | removal
+summary: one-line summary of the change
+---
+```
+
+The body describes what changed and why, with bullet lists of changes to `proposal.md` and `spec.md`. Amendment records are historical artifacts. The canonical state of the feature is always `proposal.md` and `spec.md`, which are updated in place when an amendment is made.
+
+**When to amend vs. create a new feature:**
+
+* Amend when the change extends, modifies, or removes functionality within an existing feature's scope.
+* Create a new feature only when the functionality is genuinely independent and does not overlap with any existing feature's purpose or source paths.
+* When in doubt, amend. It is easier to split a feature later than to consolidate fragmented specs.
+
+#### Consolidation
+
+Over time, specs may fragment: separate features that overlap in scope, share source paths, or represent iterations on the same capability. Periodic consolidation merges these into unified features that reflect the actual product.
+
+Consolidation involves:
+
+* **Merging** two or more features into a single feature directory with a combined proposal and spec.
+* **Absorbing** a smaller feature into a larger one that already covers most of the scope.
+* **Retiring** features whose source paths no longer exist or whose functionality has been removed.
+
+When features are consolidated, the source features are not deleted. Their `proposal.md` frontmatter is updated to:
+
+```yaml
+status: consolidated
+consolidated_into: target-feature-name
+```
+
+This preserves historical references from archived work items while making it clear the feature is no longer active. The consolidated feature is removed from `features.md`.
+
+A consolidation amendment record is created in the target feature's `amendments/` directory documenting what was merged and why.
 
 #### Source Paths
 

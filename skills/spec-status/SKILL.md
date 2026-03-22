@@ -18,6 +18,7 @@ provide a concise project status overview by reading the spec-driven development
 2. **for each specs root, list features.** read the `features.md` index. for each feature listed:
    - read its `proposal.md` frontmatter to get the `status` field
    - note the feature name, short description, and status
+   also check for feature directories not listed in `features.md` that have `status: consolidated` or `status: retired` — report these separately if present, as they indicate historical features.
 
 3. **list active work items.** glob for all files in `specs/work/active/*.md` under each specs root.
    - read the frontmatter of each to get `feature`, `status`, and `keywords`

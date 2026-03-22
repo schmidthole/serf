@@ -30,10 +30,12 @@ While Serf does not aim to dictate development lifecycle for teams, we do provid
 ```
 /serf:spec-init                     # scaffold the specs directory
 /serf:spec-new config "toml config" # create a new feature
+/serf:spec-amend config "add X"     # amend an existing feature
 /serf:spec-plan config              # generate work items from the spec
 /serf:spec-implement                # implement the next work item
 /serf:spec-status                   # check project status
 /serf:spec-check                    # detect and fix spec drift
+/serf:spec-consolidate              # merge fragmented specs
 ```
 
 ## Skills
@@ -67,10 +69,19 @@ Detect drift between feature specs and their code implementation. Verifies sourc
 
 ### `/serf:spec-new`
 
-Scaffold a new feature directory and draft its `proposal.md` and `spec.md` based on the provided description. Reads the existing codebase to infer project conventions and suggest concrete implementation details. The description can be as brief or detailed as you like.
+Scaffold a new feature directory and draft its `proposal.md` and `spec.md` based on the provided description. Reads the existing codebase to infer project conventions and suggest concrete implementation details. The description can be as brief or detailed as you like. Checks for overlap with existing features and suggests amending an existing feature when appropriate.
 
 ```
 /serf:spec-new configuration "toml-based config file loaded from ./serf.toml or /etc/serf/serf.toml with cli flag override"
+```
+
+### `/serf:spec-amend`
+
+Amend an existing feature's `proposal.md` and `spec.md` to add, remove, or change functionality. Creates an amendment record in the feature's `amendments/` directory for historical context. Use this instead of `/spec-new` when iterating on an existing feature.
+
+```
+/serf:spec-amend configuration "add hot-reload support for config file changes"
+/serf:spec-amend authentication "remove legacy basic auth, require oauth2"
 ```
 
 ### `/serf:spec-plan`
@@ -88,4 +99,13 @@ Pick up and implement the next ready work item, or specify one by name. Reads th
 ```
 /serf:spec-implement
 /serf:spec-implement 2026-03-08-implement-config-loader.md
+```
+
+### `/serf:spec-consolidate`
+
+Analyze feature specs for fragmentation, overlap, and drift from the actual codebase. Identifies features that should be merged, absorbed, or retired, then executes approved consolidations. Use periodically to keep specs aligned with the product as it evolves.
+
+```
+/serf:spec-consolidate
+/serf:spec-consolidate configuration
 ```

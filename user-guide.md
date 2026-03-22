@@ -165,9 +165,67 @@ Add a row to `specs/features/features.md`:
 
 > **Plugin equivalent:** `/serf:spec-new configuration "toml-based runtime configuration..."`
 
-### 3. Plan the work
+### 3. Amend an existing feature
 
-Read the proposal and spec, then look at the current codebase. Identify what exists and what needs to change to satisfy the spec. Create work items for each coherent unit of work.
+Features rarely stay static. When you need to add, change, or remove functionality from an existing feature, amend it rather than creating a new feature.
+
+**When to amend instead of creating a new feature:**
+
+- The change extends an existing feature's scope (e.g. adding hot-reload to configuration)
+- The change modifies how an existing feature behaves (e.g. switching config format from toml to yaml)
+- The change removes part of an existing feature (e.g. dropping support for a legacy auth method)
+- The new functionality would share source paths with an existing feature
+
+If you're unsure, amend. It is easier to split a feature later than to consolidate fragmented specs.
+
+#### Update the proposal and spec
+
+Read the existing `proposal.md` and `spec.md`, then update them in place to reflect the amended state. The proposal and spec should always represent the feature as it currently is (or will be once implemented), not as it was originally conceived.
+
+For additions, add new use cases, failure states, and technical details alongside the existing ones. For modifications, update the affected sections. For removals, delete the relevant content.
+
+#### Record the amendment
+
+Create an `amendments/` directory under the feature (if it does not already exist) and add a record:
+
+```
+specs/features/configuration/amendments/2026-03-22-add-hot-reload.md
+```
+
+```markdown
+---
+date: 2026-03-22
+type: addition
+summary: add hot-reload support for configuration changes
+---
+
+## description
+
+Added the ability for the application to detect configuration file
+changes at runtime and reload without a restart. This was requested
+to reduce downtime during configuration updates in production.
+
+## changes
+
+### proposal.md
+- added hot-reload use case under use cases
+- added failure state for reload with invalid config
+
+### spec.md
+- added `internal/config/watcher.go` to source paths
+- added file watcher implementation details
+- added reload validation logic
+```
+
+The amendment record is a historical breadcrumb. The canonical state is always `proposal.md` and `spec.md`.
+
+After amending, create work items via the planning step if implementation is needed.
+
+> **Plugin equivalent:** `/serf:spec-amend configuration "add hot-reload support for config changes"`
+
+### 4. Plan the work
+
+Read the proposal and spec (including any recent amendments), then look at the current codebase. Identify what exists and what needs to change to satisfy the spec. Create work items for each coherent unit of work.
 
 Guidelines for scoping work items:
 
@@ -231,7 +289,7 @@ When you create the first work item for a feature, update the feature's `proposa
 
 > **Plugin equivalent:** `/serf:spec-plan configuration`
 
-### 4. Implement
+### 5. Implement
 
 Pick up a work item and start building.
 
@@ -284,7 +342,7 @@ Fix any gaps that are within scope. Log any gaps that are out of scope.
 
 > **Plugin equivalent:** `/serf:spec-implement`
 
-### 5. Check for drift
+### 6. Check for drift
 
 Over time, code and specs can fall out of sync. Periodically review each feature:
 
@@ -296,6 +354,54 @@ If drift is found, update the spec to match the code. The spec should always ref
 
 > **Plugin equivalent:** `/serf:spec-check`
 
+### 7. Consolidate fragmented specs
+
+As a project grows, specs can fragment. Common patterns:
+
+- A feature was amended by creating a new feature directory instead of updating the existing one (e.g. "configuration" and "config-hot-reload" as separate features)
+- A feature was split across multiple directories that should be one (e.g. "auth-login" and "auth-session")
+- A feature's source paths overlap with another feature
+- A feature's source paths no longer exist in the codebase
+
+Periodic consolidation merges these into unified features that reflect the actual product.
+
+#### Analyze
+
+Review all features, their source paths, and the codebase. Look for:
+
+1. **Overlapping source paths** across features
+2. **Subset features** whose scope is entirely within another feature
+3. **Superseded features** replaced by newer ones
+4. **Orphaned features** whose code no longer exists
+
+#### Merge
+
+For each consolidation:
+
+1. Choose a target feature (the one with broader scope or the more established name).
+2. Rewrite the target's `proposal.md` and `spec.md` to cover the full consolidated scope. This is a rewrite, not concatenation.
+3. Move any amendment records from source features into the target's `amendments/` directory.
+4. Create a consolidation amendment record in the target documenting what was merged.
+5. Mark source features as consolidated:
+
+```yaml
+---
+status: consolidated
+consolidated_into: configuration
+---
+```
+
+6. Remove consolidated features from `features.md`.
+7. Update any active work items that referenced the source feature.
+
+Source feature directories are preserved (not deleted) so that archived work item references remain valid.
+
+#### Retire
+
+For features whose code no longer exists, update their status to `retired` and remove them from `features.md`.
+
+> **Plugin equivalent:** `/serf:spec-consolidate`
+
 ## Quick reference
 
 ### Feature files
@@ -305,6 +411,7 @@ If drift is found, update the spec to match the code. The spec should always ref
 | `specs/features/features.md` | index of all features with short descriptions |
 | `specs/features/<name>/proposal.md` | high-level description: purpose, use cases, failure states |
 | `specs/features/<name>/spec.md` | technical specification: source paths, data structures, logic |
+| `specs/features/<name>/amendments/<date>-<desc>.md` | historical record of changes to the feature |
 
 ### Work item files
 
@@ -317,7 +424,7 @@ If drift is found, update the spec to match the code. The spec should always ref
 
 | Context | Values |
 |---|---|
-| feature (`proposal.md` frontmatter) | `proposed`, `in-progress`, `implemented` |
+| feature (`proposal.md` frontmatter) | `proposed`, `in-progress`, `implemented`, `consolidated`, `retired` |
 | work item (frontmatter) | `ready`, `in-progress`, `blocked`, `done` |
 
 ### Rules of thumb

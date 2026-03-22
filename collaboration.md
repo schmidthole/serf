@@ -9,9 +9,11 @@ This guide describes how teams use serf and git together to spec, plan, and impl
 PMs own the "what" and "why." Their primary artifacts are proposals and the feature index.
 
 - create and maintain `proposal.md` files
+- amend existing features via `/serf:spec-amend` when scope changes
 - review and approve `spec.md` files
 - review work item status via `specs/work/active/` or `/serf:spec-status`
 - review PRs that update specs to ensure they still match intent
+- periodically run `/serf:spec-consolidate` to identify fragmented specs
 
 ### Developer
 
@@ -38,6 +40,7 @@ Branch names are **strictly derived** from the artifact they carry. This makes i
 |---|---|---|---|
 | main | `main` | `main` | stable trunk, always deployable |
 | spec branch | `spec/<feature-directory-name>` | `spec/configuration` | drafting a new feature's proposal and spec |
+| amend branch | `amend/<feature-directory-name>` | `amend/configuration` | amending an existing feature's proposal and spec |
 | work branch | `work/<work-item-filename-without-extension>` | `work/2026-03-08-implement-config-loader` | implementing a single work item |
 
 The work branch name **must match** the work item filename (minus `.md`). This 1:1 mapping means anyone can:
@@ -54,7 +57,8 @@ The work branch name **must match** the work item filename (minus `.md`). This 1
 3. PM opens PR → team reviews → merges to main
 4. developer/agent runs /serf:spec-plan on main (or a short-lived branch)
 5. work items land on main via PR
-6. developer creates work/2026-03-08-implement-config-loader branch from main
+6. (if amending) PM creates amend/configuration branch, amends proposal/spec, merges to main
+7. developer creates work/2026-03-08-implement-config-loader branch from main
 7. developer implements, commits code + work item updates
 8. developer opens PR → review → merge to main
 9. repeat step 6 for next work item
