@@ -49,6 +49,15 @@ follow these steps:
 
 8. **confirm** by listing all created work items with their file paths.
 
+### boundaries
+
+**this skill is planning only. do not implement any code changes.**
+
+- your job ends after confirming the created work items in step 8. do not proceed to implementation.
+- do not create, modify, or delete any source code files. only create or modify files inside `specs/`.
+- do not run tests, install dependencies, or execute any build/dev commands.
+- if the user asks you to start implementing after planning, direct them to use `/serf:spec-implement` instead.
+
 ### guidelines
 
 - prefer fewer, well-scoped work items over many granular ones. each work item should represent a coherent unit of work that can be picked up and completed independently.
