@@ -34,6 +34,7 @@ follow these steps:
    - a concise title (which becomes part of the filename)
    - which gap(s) it addresses
    - a brief description of the implementation approach
+   - proposed acceptance criteria (concrete, verifiable conditions)
 
    ask the user for approval or adjustments before proceeding.
 
@@ -42,7 +43,8 @@ follow these steps:
    - create the file at `specs/work/active/YYYY-MM-DD-title.md` using today's date
    - populate frontmatter with `feature`, `status: ready`, `start_date`, empty `archive_date`, and relevant `keywords`
    - write a **summary** section that describes the gap, references the relevant parts of the spec, and explains why the change is needed
-   - write a **tasks** section with a numbered checklist breaking the work into concrete steps
+   - write an **acceptance criteria** section with concrete, testable conditions that define "done." each criterion should be independently verifiable by running a test, command, or observable check, not by reading code. good criteria take the form: "when X happens, Y is the result." avoid subjective criteria like "code is clean" or "handles errors properly."
+   - write a **tasks** section with a numbered checklist breaking the work into concrete steps. include verification tasks (e.g., "write tests for X", "verify Y produces expected output") alongside implementation tasks, not just at the end
    - include an empty **log** section
 
 7. **update feature status.** if the feature's `proposal.md` has `status: proposed`, update it to `status: in-progress`.

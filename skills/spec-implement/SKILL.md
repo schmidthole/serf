@@ -38,41 +38,55 @@ follow these steps:
 
 6. **if resuming, review previous progress.** read the existing log entries and check which tasks are already marked `[x]`. understand what was previously done and pick up from the first incomplete task.
 
+7. **create a task list for progress tracking.** using the work item's tasks checklist, create a corresponding task for each item using TaskCreate. if resuming, mark already-completed tasks as done. this gives the user real-time visibility and preserves your progress if context compresses.
+
 ### implementation
 
-7. **work through the tasks in order.** for each incomplete task in the tasks list:
-   - implement the change described by the task
-   - run any relevant tests, linters, or formatters as appropriate for the project
-   - mark the task as complete (`[x]`) in the work item file
-   - add a brief log entry noting what was done and any decisions made
-   - if during implementation you discover additional work is required (e.g. a missing edge case, a needed refactor, an undocumented dependency), add new tasks to the tasks list in the work item file and log why they were added. this ensures the work item remains an accurate record of what was actually needed and helps future agents if the work is resumed.
+8. **work through the tasks in order using a red/green cycle.** for each incomplete task:
 
-8. **follow project conventions.** respect the coding style, directory structure, and patterns already established in the codebase. consult the project's `README.md` and any build/test/format commands it describes.
+   **red** — before writing implementation code, establish a failing verification:
+   - if the project has a test framework, write a test that captures the expected behavior described by the task and the work item's acceptance criteria. run it and confirm it fails.
+   - if a test is not practical for this task (e.g., config file changes, build setup), identify a concrete command or check that currently produces the wrong result or errors, and document it in the log.
 
-9. **update source paths.** if the implementation creates new files or directories that should be tracked by the feature spec, add them to the `## Source Paths` section in `spec.md`.
+   **green** — implement the change, then verify:
+   - write the implementation code for the task.
+   - run the failing test or check and confirm it now passes.
+   - run the broader test suite, linters, and formatters to ensure nothing else broke.
+
+   **record** — update tracking:
+   - mark the task as complete (`[x]`) in the work item file and mark the corresponding task as done using TaskUpdate.
+   - add a log entry noting what was done, the verification result, and any decisions made.
+
+   if during implementation you discover additional work is required (e.g. a missing edge case, a needed refactor, an undocumented dependency), add new tasks to the tasks list in the work item file (and create matching tasks with TaskCreate), then log why they were added. this ensures the work item remains an accurate record of what was actually needed and helps future agents if the work is resumed.
+
+9. **follow project conventions.** respect the coding style, directory structure, and patterns already established in the codebase. consult the project's `README.md` and any build/test/format commands it describes.
+
+10. **update source paths.** if the implementation creates new files or directories that should be tracked by the feature spec, add them to the `## Source Paths` section in `spec.md`.
 
 ### verification
 
-10. **verify all tasks are complete.** re-read the work item and confirm every task is marked `[x]`.
+11. **verify all tasks are complete.** re-read the work item and confirm every task is marked `[x]`.
 
-11. **run tests and formatting.** run the project's test suite and formatter to ensure everything passes.
+12. **run the full test suite and formatting.** run the project's test suite and formatter. all tests must pass, including any new tests written during implementation.
 
-12. **verify against the spec.** re-read the feature's `proposal.md` and `spec.md`. check the implementation against:
-   - **use cases**: does the code satisfy each use case described in the proposal?
-   - **failure states**: does the code handle the failure scenarios described in the proposal?
-   - **technical details**: does the code match the data structures, interfaces, and behavior described in the spec?
+13. **verify acceptance criteria.** re-read the work item's acceptance criteria and verify each one by executing the corresponding test, command, or check. do not verify by reading code alone. for each criterion, log the verification method and result. if any criterion is not met, fix the issue before proceeding.
+
+14. **verify against the spec.** re-read the feature's `proposal.md` and `spec.md`. check the implementation against:
+   - **use cases**: exercise each use case described in the proposal and confirm correct behavior through tests or direct execution.
+   - **failure states**: trigger each failure scenario and confirm the code handles it as specified.
+   - **technical details**: confirm the code matches the data structures, interfaces, and behavior described in the spec.
 
    if any gaps are found, log them and either fix them (if within scope of the work item) or inform the user of the discrepancy.
 
 ### completion
 
-13. **update the work item frontmatter.** set `status: done` and `archive_date` to today's date.
+15. **update the work item frontmatter.** set `status: done` and `archive_date` to today's date.
 
-14. **move the work item** from `specs/work/active/` to `specs/work/archive/`.
+16. **move the work item** from `specs/work/active/` to `specs/work/archive/`.
 
-15. **check feature completion.** glob for any remaining active work items targeting this feature. if none remain, ask the user whether the feature is fully implemented. if yes, update the feature's `proposal.md` status to `implemented`.
+17. **check feature completion.** glob for any remaining active work items targeting this feature. if none remain, ask the user whether the feature is fully implemented. if yes, update the feature's `proposal.md` status to `implemented`.
 
-16. **summarize what was done.** output a brief summary of the implementation, any decisions logged, and the final state.
+18. **summarize what was done.** output a brief summary including: what was implemented, verification results for each acceptance criterion, any decisions logged, and the final state.
 
 ### guidelines
 

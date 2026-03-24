@@ -154,7 +154,8 @@ keywords: "comma,delimited,list,of,keywords" # comma delimited keywords for inde
 Each work item markdown file should include the following sections. This is simply a guideline, as these files are meant to be flexible.
 
 * **Summary**: Describe the work to be done, background, and why. Should be equivalent to a story description so an user/agent can pick up the item and have enough context to complete the tasks. References the feature where necessary and the required changes.
-* **Tasks**: Markdown list of tasks, with adequate descriptions. The tasks should be in the form of `- [ ] X.X task description` and be marked with `[x]` after completion.
+* **Acceptance Criteria**: Concrete, testable conditions that define when the work item is complete. Each criterion should be independently verifiable by running a test, command, or observable check. Good criteria take the form: "when X happens, Y is the result."
+* **Tasks**: Markdown list of tasks, with adequate descriptions. The tasks should be in the form of `- [ ] X.X task description` and be marked with `[x]` after completion. Tasks should include both implementation and verification steps.
 * **Log**: This is a free-form section describing the decisions made and issues encountered as the work is completed. The goal of this section is to provide enough background to hand off an in progress task to another user/agent and use as a reference later when investigating why certain approaches were taken for a given work item. Think of it as a breadcrumb for future readers.
 
 ### Keeping Specs In Sync
